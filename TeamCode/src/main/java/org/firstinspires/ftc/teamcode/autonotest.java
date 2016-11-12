@@ -80,10 +80,10 @@ public class autonotest extends LinearOpMode {
     /*static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;*/
 
-    void drive(int direction, double speed){
+    private void drive(int direction, double speed){
         if (direction == 0){
-            robot.frontLeft.setPower(speed);
-            robot.backLeft.setPower(speed);
+            robot.frontLeft.setPower(-speed);
+            robot.backLeft.setPower(-speed);
             robot.frontRight.setPower(speed);
             robot.backRight.setPower(speed);
         }
@@ -111,6 +111,8 @@ public class autonotest extends LinearOpMode {
 
         waitForStart();
 
+        drive(0, 0.1);
+
         while (opModeIsActive()){
             for(VuforiaTrackable beac : beacons){
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
@@ -120,6 +122,10 @@ public class autonotest extends LinearOpMode {
                     telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
                     telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
                     telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
+                    if(translation.get(0) < 0){
+                        requestOpModeStop();
+                        telemetry.addData(beac.getName(), "Found");
+                    }
                 }
             }
             telemetry.update();
