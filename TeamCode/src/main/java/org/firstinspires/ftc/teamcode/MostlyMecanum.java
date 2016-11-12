@@ -50,12 +50,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="PossiblyAPushbot", group="Pushbot")
+@TeleOp(name="MostlyMecanum", group="Mecanum")
 public class MostlyMecanum extends OpMode{
 
+    private double Ch1,Ch3,Ch4,FrontLeft,BackLeft,FrontRight,BackRight;
+
     /* Declare OpMode members. */
-    hopefullymeccanum robot       = new hopefullymeccanum(); // use the class created to define a Pushbot's hardware
-                                                         // could also use HardwarePushbotMatrix class.
+    private hopefullymeccanum robot = new hopefullymeccanum(); // use the class created to define a Pushbot's hardware
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -68,7 +69,7 @@ public class MostlyMecanum extends OpMode{
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("IT", "LIVES");    //
         updateTelemetry(telemetry);
     }
 
@@ -91,7 +92,7 @@ public class MostlyMecanum extends OpMode{
      */
     @Override
     public void loop() {
-        double left
+        /*double left;
         double right;
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
@@ -100,11 +101,26 @@ public class MostlyMecanum extends OpMode{
         robot.frontLeft.setPower(-left);
         robot.frontRight.setPower(right);
         robot.backLeft.setPower(-left);
-        robot.backRight.setPower(right);
+        robot.backRight.setPower(right);*/
+
+        //BETA mecanum drive
+        Ch1 = gamepad1.right_stick_x;
+        Ch3 = -gamepad1.left_stick_y;
+        Ch4 = gamepad1.left_stick_x;
+
+        FrontLeft = Ch3 + Ch1 + Ch4;
+        BackLeft = Ch3 + Ch1 - Ch4;
+        FrontRight = Ch3 - Ch1 - Ch4;
+        BackRight = Ch3 - Ch1 + Ch4;
+
+        robot.frontLeft.setPower(si(-FrontLeft, 1.5));
+        robot.frontRight.setPower(si(FrontRight, 1.5));
+        robot.backLeft.setPower(si(-BackLeft, 1.5));
+        robot.backRight.setPower(si(BackRight, 1.5));
 
         // Send telemetry message to signify robot running;
-        telemetry.addData("left",  "%.2f", left);
-        telemetry.addData("right", "%.2f", right);
+        /*telemetry.addData("left",  "%.2f", left);
+        telemetry.addData("right", "%.2f", right);*/
         updateTelemetry(telemetry);
     }
 
@@ -113,6 +129,18 @@ public class MostlyMecanum extends OpMode{
      */
     @Override
     public void stop() {
+    }
+
+    double si(double joyVal, double divBy) {
+        /**
+         * This function scales the input.
+         * It makes it so that when you push the joystick forward, the robot doesn't respond in a linear way.
+         * When you push it a little bit, you have more precision control over speed.
+         * Pushing all the way overrides the math and jumps to 1.
+         */
+        if(joyVal==1) return 1;
+        else if(joyVal==-1) return -1;
+        else return -Math.log(-joyVal + 1) / divBy;
     }
 
 }
