@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="MostlyMecanum", group="Mecanum")
-public class MostlyMecanum extends OpMode{
+@TeleOp(name="MonitoredMecanum", group="Mecanum")
+@Disabled
+public class MonitoredMecanum extends OpMode{
 
     private double Ch1,Ch3,Ch4,FrontLeft,BackLeft,FrontRight,BackRight;
 
     /* Declare OpMode members. */
-    private hopefullymeccanum robot = new hopefullymeccanum(); // use the class created to define a Mecanobot's hardware
+    private hopefullymeccanum robot = new hopefullymeccanum(); // use the class created to define a Pushbot's hardware
 
     /*
      * Code to run ONCE when the driver hits INIT
