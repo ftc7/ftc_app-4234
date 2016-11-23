@@ -6,7 +6,6 @@ package org.firstinspires.ftc.teamcode;
         in ≈ 22.5 units
  */
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -16,7 +15,6 @@ import com.vuforia.HINT;
 import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -25,12 +23,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 import static java.lang.Math.round;
-import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
-
+import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES
+        ;
 @Autonomous(name="AlphaAutonomous", group="Autonomous")
 public class autonomous extends LinearOpMode {
 
     ColorSensor csensor;
+
+    hopefullymeccanum robot = new hopefullymeccanum();
+
+    //robot.init(hardwareMap);
 
     public void runOpMode() throws InterruptedException {
         float hsvValues[] = {0F,0F,0F};
@@ -52,8 +54,6 @@ public class autonomous extends LinearOpMode {
         beacons.get(1).setName("Tools");
         beacons.get(2).setName("Legos");
         beacons.get(3).setName("Gears");
-
-        hopefullymeccanum robot = new hopefullymeccanum();
 
         robot.init(hardwareMap);
 
@@ -96,7 +96,7 @@ public class autonomous extends LinearOpMode {
         robot.backRight.setPower(0);
 
 
-        while(opModeIsActive()){
+        /*while(opModeIsActive()){
             Color.RGBToHSV(csensor.red(), csensor.green(), csensor.blue(), hsvValues);
             telemetry.addData("Hue", hsvValues[0]);
             telemetry.update();
@@ -106,12 +106,61 @@ public class autonomous extends LinearOpMode {
                     relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
                 }
             });
+        }*/
 
-        }
+
 
         /*robot.frontLeft.setPower(-0.1);
         robot.frontRight.setPower(0.1);
         robot.backLeft.setPower(-0.1);
         robot.backRight.setPower(0.1);*/
     }
+
+    void move(short direction, long distance, long speed) throws InterruptedException{
+        speed /= 100;
+
+        startMove(direction, speed);
+
+        sleep(distance/speed);
+
+        stopMove();
+    }
+
+    void startMove(short direction, long speed) {
+
+        switch (direction) {
+            case (0): {             //Forwards
+                robot.frontLeft.setPower(-speed);
+                robot.frontRight.setPower(speed);
+                robot.backLeft.setPower(-speed);
+                robot.backRight.setPower(speed);
+            }
+            case(1): {              //Left
+                robot.frontLeft.setPower(speed);
+                robot.frontRight.setPower(speed);
+                robot.backLeft.setPower(-speed);
+                robot.backRight.setPower(-speed);
+            }
+            case(2): {              //Backwards
+                robot.frontLeft.setPower(speed);
+                robot.frontRight.setPower(-speed);
+                robot.backLeft.setPower(speed);
+                robot.backRight.setPower(-speed);
+            }
+            case(3): {              //Right
+                robot.frontLeft.setPower(-speed);
+                robot.frontRight.setPower(-speed);
+                robot.backLeft.setPower(speed);
+                robot.backRight.setPower(speed);
+            }
+        }
+    }
+
+    void stopMove() {
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
+    }
+
 }

@@ -67,9 +67,9 @@ public class MostlyMecanum extends OpMode{
         FrontRight = Ch3 - Ch1 - Ch4;
         BackRight = Ch3 - Ch1 + Ch4;
 
-        robot.frontLeft.setPower(Range.clip(si(-FrontLeft, 1.5), -1, 1));
+        robot.frontLeft.setPower(Range.clip(si(FrontLeft, 1.5), -1, 1));
         robot.frontRight.setPower(Range.clip(si(FrontRight, 1.5), -1, 1));
-        robot.backLeft.setPower(Range.clip(si(-BackLeft, 1.5), -1, 1));
+        robot.backLeft.setPower(Range.clip(si(BackLeft, 1.5), -1, 1));
         robot.backRight.setPower(Range.clip(si(BackRight, 1.5), -1, 1));
 
         // Send telemetry message to signify robot running;

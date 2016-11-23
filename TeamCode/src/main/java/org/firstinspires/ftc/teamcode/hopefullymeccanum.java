@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -29,8 +30,8 @@ public class hopefullymeccanum
     public DcMotor  backRight   = null;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     /* Constructor */
     public hopefullymeccanum(){
@@ -43,10 +44,13 @@ public class hopefullymeccanum
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        frontLeft   = hwMap.dcMotor.get("frontLeft");
-        frontRight  = hwMap.dcMotor.get("frontRight");
-        backLeft   = hwMap.dcMotor.get("backLeft");
-        backRight  = hwMap.dcMotor.get("backRight");
+        frontLeft = hwMap.dcMotor.get("frontLeft");
+        frontRight = hwMap.dcMotor.get("frontRight");
+        backLeft = hwMap.dcMotor.get("backLeft");
+        backRight = hwMap.dcMotor.get("backRight");
+
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeft.setPower(0);
@@ -54,12 +58,12 @@ public class hopefullymeccanum
         backLeft.setPower(0);
         backRight.setPower(0);
 
-        // Set all motors to run without encoders.
+        // Set all motors to run using encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /***
