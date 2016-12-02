@@ -33,7 +33,7 @@ public class autonomous extends LinearOpMode {
     private VuforiaTrackables beacons;
 
     //robot.init(hardwareMap);
-    public autonomous() {
+    public autonomous() {       //Called upon invocation of the class; defines variables and initializes Vuforia
         super();
         VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
@@ -47,11 +47,11 @@ public class autonomous extends LinearOpMode {
         beacons.get(1).setName("Tools");
         beacons.get(2).setName("Legos");
         beacons.get(3).setName("Gears");
+        beacons.activate();
     }
 
     public void runOpMode() throws InterruptedException {
         ColorSensor csensor;
-
         //float hsvValues[] = {0F,0F,0F};
         //final float values[] = hsvValues;
         //final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
@@ -60,49 +60,15 @@ public class autonomous extends LinearOpMode {
 
         Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
 
-
         robot.init(hardwareMap);
 
         waitForStart();
 
-        beacons.activate();
+        move(0, 12, 0.5);
 
-        robot.frontLeft.setPower(-0.1);
-        robot.frontRight.setPower(0.1);
-        robot.backLeft.setPower(-0.1);
-        robot.backRight.setPower(0.1);
+        telemetry.addData("move 12", "complete");
 
-        boolean running = true;
-
-        while (running){
-            telemetry.addData("Camera", vuforia.getCameraCalibration());
-
-            for(VuforiaTrackable beac : beacons){
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
-
-                if(pose != null){
-                    VectorF translation = pose.getTranslation();
-
-                    telemetry.addData(beac.getName() + "-Translation", translation);
-
-                    telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
-                    telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
-                    telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
-                    if (translation.get(1) < 0){
-                        running = false;
-                    }
-                }
-            }
-            telemetry.update();
-        }
-
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);
-
-
-        move(0, 12, 1);
+        driveToVuforia(0, 0, 0.1);
 
         /*while(opModeIsActive()){
             Color.RGBToHSV(csensor.red(), csensor.green(), csensor.blue(), hsvValues);
@@ -115,16 +81,9 @@ public class autonomous extends LinearOpMode {
                 }
             });
         }*/
-
-
-
-        /*robot.frontLeft.setPower(-0.1);
-        robot.frontRight.setPower(0.1);
-        robot.backLeft.setPower(-0.1);
-        robot.backRight.setPower(0.1);*/
     }
 
-    /*int driveToVuforia(int direction, long xpos, long speed){
+    private int driveToVuforia(int direction, long xpos, double speed){
         startMove(direction, speed);
 
         boolean running = true;
@@ -154,44 +113,44 @@ public class autonomous extends LinearOpMode {
         stopMove();
 
         return 0;
-    }*/
+    }
 
-    private void move(int direction, long distance, long speed) throws InterruptedException{
+    private void move(int direction, double distance, double speed) throws InterruptedException{
         speed /= 100;
 
         startMove(direction, speed);
 
-        sleep(distance/speed);
+        sleep((long) (distance/speed));
 
         stopMove();
     }
 
-    private void startMove(int direction, long speed) {
+    private void startMove(int direction, double speed) {
 
         switch (direction) {
-            case (0): {             //Forwards
+            case (0): {             //Forwards is positive
                 robot.frontLeft.setPower(-speed);
                 robot.frontRight.setPower(speed);
                 robot.backLeft.setPower(-speed);
                 robot.backRight.setPower(speed);
             }
-            case(1): {              //Left
+            case(1): {              //Left is positive
                 robot.frontLeft.setPower(speed);
                 robot.frontRight.setPower(speed);
                 robot.backLeft.setPower(-speed);
                 robot.backRight.setPower(-speed);
             }
-            case(2): {              //Backwards
-                robot.frontLeft.setPower(speed);
-                robot.frontRight.setPower(-speed);
+            case(2): {                //Forwards and left is positive
                 robot.backLeft.setPower(speed);
-                robot.backRight.setPower(-speed);
+                robot.frontRight.setPower(speed);
+                robot.backRight.setPower(0);
+                robot.frontLeft.setPower(0);
             }
-            case(3): {              //Right
-                robot.frontLeft.setPower(-speed);
-                robot.frontRight.setPower(-speed);
-                robot.backLeft.setPower(speed);
+            case(3): {                //Forwards and right is positive
+                robot.backLeft.setPower(0);
+                robot.frontRight.setPower(0);
                 robot.backRight.setPower(speed);
+                robot.frontLeft.setPower(speed);
             }
         }
     }
