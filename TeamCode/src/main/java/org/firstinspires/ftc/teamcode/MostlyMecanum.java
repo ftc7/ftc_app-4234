@@ -20,9 +20,7 @@ public class MostlyMecanum extends OpMode{
          */
         robot.init(hardwareMap);
 
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("IT", "LIVES");    //
-        updateTelemetry(telemetry);
+        telemetry.addData("Robot", "ready");
     }
 
     /*
@@ -60,6 +58,19 @@ public class MostlyMecanum extends OpMode{
         robot.frontRight.setPower(Range.clip(si(FrontRight, 1.5), -1, 1));
         robot.backLeft.setPower(Range.clip(si(BackLeft, 1.5), -1, 1));
         robot.backRight.setPower(Range.clip(si(BackRight, 1.5), -1, 1));
+
+        if(gamepad1.left_bumper){
+            robot.elevator.setPower(20);
+        }
+        else{
+            robot.elevator.setPower(0);
+        }
+        if(gamepad1.right_bumper){
+            robot.flinger.setPower(20);
+        }
+        else{
+            robot.flinger.setPower(0);
+        }
 
         telemetry.addData("frontRight", FrontRight);
         telemetry.addData("frontLeft", FrontLeft);

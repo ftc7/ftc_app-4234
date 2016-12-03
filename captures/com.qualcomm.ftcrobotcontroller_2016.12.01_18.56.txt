@@ -1,0 +1,55 @@
+TASK com.qualcomm.ftcrobotcontroller id=7
+  ACTIVITY com.qualcomm.ftcrobotcontroller/org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity 41907aa0 pid=6016
+    Local Activity 4187fc88 State:
+      mResumed=true mStopped=false mFinished=false
+      mLoadersStarted=true
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 310mcc65535mnc en_US ldltr sw320dp w320dp h544dp 240dpi nrml long port finger -keyb/v/h -nav/h s.6}
+    FragmentManager misc state:
+      mActivity=org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity@4187fc88
+      mContainer=android.app.Activity$1@4187fe58
+      mCurState=5 mStateSaved=false mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=false
+      mLastFrameTime=914800 (401 ms ago)
+    View Hierarchy:
+      com.android.internal.policy.impl.PhoneWindow$DecorView{41882310 V.E..... R....... 0,0-480,854}
+        android.widget.LinearLayout{41883330 V.E..... ........ 0,0-480,854}
+          android.view.ViewStub{41886f08 G.E..... ......I. 0,0-0,0 #1020312}
+          android.widget.FrameLayout{41887338 V.ED.... ........ 0,0-480,854 #1020002 android:id/content}
+            android.widget.LinearLayout{41888a60 VFE..... ........ 0,0-480,854 #7f0c000e app:id/entire_screen}
+              android.widget.RelativeLayout{41888eb8 V.E..... ........ 0,0-480,120 #7f0c000f app:id/top_bar}
+                android.widget.ImageView{41889620 V.ED.... ........ 2,2-65,118 #7f0c0010 app:id/robotIcon}
+                android.widget.TextView{418a46a0 V.ED.... ........ 67,0-194,61 #7f0c0011 app:id/textDeviceName}
+                android.widget.ImageButton{418a56b0 VFED..C. ........ 410,15-465,104 #7f0c0012 app:id/menu_buttons}
+              android.widget.LinearLayout{418a6a48 V.E..... ........ 0,120-480,155 #7f0c0005 app:id/included_header}
+                android.widget.LinearLayout{418a73c0 V.E..... ........ 0,0-480,35 #7f0c0073 app:id/idActiveConfigHeader}
+                  android.widget.TextView{418a7fb0 V.ED.... ........ 12,3-401,32}
+                  android.widget.TextView{418a8cf8 V.ED.... ........ 401,3-468,32 #7f0c0074 app:id/idActiveConfigName}
+              android.widget.RelativeLayout{418a91e0 V.E..... ........ 0,155-480,854 #7f0c0013 app:id/RelativeLayout}
+                android.widget.TextView{418a9640 V.ED.... ........ 24,8-456,37 #7f0c0014 app:id/textNetworkConnectionStatus}
+                android.widget.TextView{418a9be0 V.ED.... ........ 24,37-456,66 #7f0c0015 app:id/textRobotStatus}
+                android.widget.TextView{418aa148 V.ED.... ........ 24,66-456,95 #7f0c0016 app:id/textOpMode}
+                android.widget.FrameLayout{418aa700 V.E..... ........ 24,95-456,633}
+                  android.widget.LinearLayout{418aab38 V.E..... ........ 0,0-432,538 #7f0c0018 app:id/cameraMonitorViewId}
+                  android.widget.TextView{418aae48 V.ED.... ........ 0,0-432,101 #7f0c0019 app:id/textErrorMessage}
+                android.widget.TextView{418ab338 I.ED.... ......I. 24,633-456,662 #7f0c0017 app:id/textGamepad1}
+                android.widget.TextView{418ab8a0 I.ED.... ......I. 24,662-456,691 #7f0c001a app:id/textGamepad2}
+                android.widget.TextView{418abe08 I.ED.... ......ID 24,8-456,691 #7f0c001b app:id/textRemoteProgrammingMode}
+              android.webkit.WebView{418ade70 VFEDHVC. .F...... 0,854-2,856 #7f0c001c app:id/webViewBlocksRuntime}
+    Looper (main, tid 1) {4186bf20}
+      Message 0: { when=+48s6ms callback=com.qualcomm.robotcore.util.BatteryChecker$1 target=android.os.Handler }
+      Message 1: { when=+48s15ms callback=com.qualcomm.robotcore.util.BatteryChecker$1 target=android.os.Handler }
+      Message 2: { when=+59s578ms callback=com.qualcomm.robotcore.util.Dimmer$3 target=android.os.Handler }
+      Message 3: { when=+2m4s808ms callback=com.qualcomm.robotcore.util.BatteryChecker$1 target=android.os.Handler }
+      Message 4: { when=+2m4s810ms callback=com.qualcomm.robotcore.util.BatteryChecker$1 target=android.os.Handler }
+      (Total messages: 5, idling=false, quitting=false)

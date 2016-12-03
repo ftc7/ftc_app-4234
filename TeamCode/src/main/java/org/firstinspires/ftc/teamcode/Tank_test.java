@@ -99,9 +99,9 @@ public class Tank_test extends OpMode{
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
         left = -gamepad1.left_stick_y;
         right = -gamepad1.right_stick_y;
-        robot.frontLeft.setPower(-left);
+        robot.frontLeft.setPower(left);
         robot.frontRight.setPower(right);
-        robot.backLeft.setPower(-left);
+        robot.backLeft.setPower(left);
         robot.backRight.setPower(right);
 
         // Send telemetry message to signify robot running;

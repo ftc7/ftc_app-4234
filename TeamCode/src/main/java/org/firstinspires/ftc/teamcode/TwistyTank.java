@@ -37,21 +37,6 @@ public class TwistyTank extends OpMode{
      */
     @Override
     public void start() {
-        robot.frontLeft.setPower (0.5);
-        robot.frontRight.setPower(0.5);
-        //robot.backLeft.setPower  (0.5);
-        //robot.backRight.setPower (0.5);
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        robot.frontLeft.setPower (0);
-        robot.frontRight.setPower(0);
-        //robot.backLeft.setPower  (0);
-        //robot.backRight.setPower (0);
     }
 
     /*
@@ -72,8 +57,8 @@ public class TwistyTank extends OpMode{
 
         robot.frontLeft.setPower(Range.clip(si(FrontLeft, 1.5), -1, 1));
         robot.frontRight.setPower(Range.clip(si(FrontRight, 1.5), -1, 1));
-        //robot.backLeft.setPower(Range.clip(si(BackLeft, 1.5), -1, 1));
-        //robot.backRight.setPower(Range.clip(si(BackRight, 1.5), -1, 1));
+        robot.backLeft.setPower(Range.clip(si(BackLeft, 1.5), -1, 1));
+        robot.backRight.setPower(Range.clip(si(BackRight, 1.5), -1, 1));
 
         telemetry.addData("frontRight", FrontRight);
         telemetry.addData("frontLeft", FrontLeft);
