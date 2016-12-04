@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  *
  * This class is the hardware map of the robot.
  */
-public class hopefullymeccanum
+public class hopefullyrunto
 {
     /* Public OpMode members. */
     public DcMotor frontLeft   = null;
@@ -29,7 +29,7 @@ public class hopefullymeccanum
     //private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public hopefullymeccanum(){
+    public hopefullyrunto(){
 
     }
 
@@ -49,11 +49,6 @@ public class hopefullymeccanum
         buttonPress = ahwMap.servo.get("buttonPress");
         colorSense  = ahwMap.colorSensor.get("colorSense");
 
-        /*frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);*/
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-
         // Set all motors to zero power
         frontLeft.setPower(0);
         frontRight.setPower(0);
@@ -64,12 +59,15 @@ public class hopefullymeccanum
 
         // Set all motors to run using encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
     }
 
     /***

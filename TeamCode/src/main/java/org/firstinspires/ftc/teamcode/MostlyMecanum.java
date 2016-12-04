@@ -60,7 +60,7 @@ public class MostlyMecanum extends OpMode{
         robot.backRight.setPower(Range.clip(si(BackRight, 1.5), -1, 1));
 
         if(gamepad1.left_bumper){
-            robot.elevator.setPower(20);
+            robot.elevator.setPower(-50);
         }
         else{
             robot.elevator.setPower(0);

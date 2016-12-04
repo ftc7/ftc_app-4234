@@ -11,6 +11,7 @@ import android.view.View;*/
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.vuforia.HINT;
 import com.vuforia.Vuforia;
 
@@ -25,17 +26,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import static java.lang.Math.round;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
-@Autonomous(name="AlphaAutonomous", group="Autonomous")
+@Autonomous(name="AlphasAutonomous", group="Autonomous")
 public class autonomous extends LinearOpMode {
 
-    private hopefullymeccanum robot = new hopefullymeccanum();
+    private hopefullyrunto robot = new hopefullyrunto();
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables beacons;
 
     //robot.init(hardwareMap);
     public autonomous() {       //Called upon invocation of the class; defines variables and initializes Vuforia
         super();
-        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
+        /*VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         params.vuforiaLicenseKey = "AaIK0f//////AAAAGTsgmHszM030skFBvcnAJlNSWaH7oKLZhxAZeCi7ToBGSKkO7T3EvzsRVYQdyDp2X+TFK6TQs+3WoCHkZXDYPQd87f77D6kvcBr8zbJ07Fb31UKiXdUBvX+ZQSV3kBhdAoxhfMa0WPgys7DYaeiOmM49CsNra7nVh05ls0th3h07wwHz3s/PBZnQwpbfr260CDgqBv4e9D79Wg5Ja5p+HAOJvyqg2r/Z5dOyRvVI3f/jPBRZHvDgDF9KTcuJAPoDHxfewmGFOFtiUamRLvcrkK9rw2Vygi7w23HYlzFO7yap+jUk1bv0uWNc0j5HPJDAjqa2ijBN9aVDrxzmFJml5WMA3GJJp8WOd9gkGhtI/BIo";
         params.cameraMonitorFeedback = AXES;
@@ -47,7 +48,7 @@ public class autonomous extends LinearOpMode {
         beacons.get(1).setName("Tools");
         beacons.get(2).setName("Legos");
         beacons.get(3).setName("Gears");
-        beacons.activate();
+        beacons.activate();*/
     }
 
     public void runOpMode() throws InterruptedException {
@@ -58,17 +59,17 @@ public class autonomous extends LinearOpMode {
         csensor = hardwareMap.colorSensor.get("colorSense");
         csensor.enableLed(false);
 
-        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
+        //Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
 
         robot.init(hardwareMap);
 
         waitForStart();
 
-        move(0, 12, 0.5);
+        startMove(0, 100, 10000);
 
-        telemetry.addData("move 12", "complete");
+        telemetry.addData("move 10000", "complete");
 
-        driveToVuforia(0, 0, 0.1);
+        //driveToVuforia(0, 0, 0.1);
 
         /*while(opModeIsActive()){
             Color.RGBToHSV(csensor.red(), csensor.green(), csensor.blue(), hsvValues);
@@ -83,7 +84,7 @@ public class autonomous extends LinearOpMode {
         }*/
     }
 
-    private int driveToVuforia(int direction, long xpos, double speed){
+    /*private int driveToVuforia(int direction, long xpos, double speed){
         startMove(direction, speed);
 
         boolean running = true;
@@ -113,9 +114,9 @@ public class autonomous extends LinearOpMode {
         stopMove();
 
         return 0;
-    }
+    }*/
 
-    private void move(int direction, double distance, double speed) throws InterruptedException{
+    /*private void move(int direction, double distance, double speed) throws InterruptedException{
         speed /= 100;
 
         startMove(direction, speed);
@@ -123,22 +124,32 @@ public class autonomous extends LinearOpMode {
         sleep((long) (distance/speed));
 
         stopMove();
-    }
+    }*/
 
-    private void startMove(int direction, double speed) {
+    private void startMove(int direction, double speed, int distance) {
 
-        switch (direction) {
+        robot.frontLeft.setTargetPosition(distance);
+        robot.backLeft.setTargetPosition(distance);
+        robot.frontRight.setTargetPosition(distance);
+        robot.backRight.setTargetPosition(distance);
+
+        robot.frontLeft.setPower(speed);
+        robot.backLeft.setPower(speed);
+        robot.frontRight.setPower(speed);
+        robot.backRight.setPower(speed);
+
+        /*switch (direction) {
             case (0): {             //Forwards is positive
-                robot.frontLeft.setPower(-speed);
+                robot.frontLeft.setPower(speed);
                 robot.frontRight.setPower(speed);
-                robot.backLeft.setPower(-speed);
+                robot.backLeft.setPower(speed);
                 robot.backRight.setPower(speed);
             }
             case(1): {              //Left is positive
                 robot.frontLeft.setPower(speed);
-                robot.frontRight.setPower(speed);
+                robot.frontRight.setPower(-speed);
                 robot.backLeft.setPower(-speed);
-                robot.backRight.setPower(-speed);
+                robot.backRight.setPower(speed);
             }
             case(2): {                //Forwards and left is positive
                 robot.backLeft.setPower(speed);
@@ -152,15 +163,15 @@ public class autonomous extends LinearOpMode {
                 robot.backRight.setPower(speed);
                 robot.frontLeft.setPower(speed);
             }
-        }
+        }*/
     }
 
-    private void stopMove() {
+    /*private void stopMove() {
         robot.frontLeft.setPower(0);
         robot.frontRight.setPower(0);
         robot.backLeft.setPower(0);
         robot.backRight.setPower(0);
-    }
+    }*/
 
     /*long vuforiaInches(double vuforiaIn) {
         return (long) (vuforiaIn / 22.5);
