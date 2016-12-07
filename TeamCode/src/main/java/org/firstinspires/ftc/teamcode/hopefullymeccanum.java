@@ -70,6 +70,9 @@ public class hopefullymeccanum
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        mounter.setPosition(180);
+        buttonPress.setPosition(165);
     }
 
     /***
