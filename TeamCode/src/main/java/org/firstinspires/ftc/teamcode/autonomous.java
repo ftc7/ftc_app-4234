@@ -26,7 +26,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import static java.lang.Math.round;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
-@Autonomous(name="AlphasAutonomous", group="Autonomous")
+@Autonomous(name="AlphaAutonomous", group="Autonomous")
 public class autonomous extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();
@@ -65,7 +65,25 @@ public class autonomous extends LinearOpMode {
 
         waitForStart();
 
-        startMove(0, 100, 10000);
+        startMove(0, 10, 10000);
+
+        int i = 0;
+
+        while(i<5000){
+            i++;
+            Thread.sleep(5);
+            telemetry.addData("frontLeft", robot.frontLeft.getCurrentPosition());
+            telemetry.addData("backLeft", robot.backLeft.getCurrentPosition());
+            telemetry.addData("frontRight", robot.frontRight.getCurrentPosition());
+            telemetry.addData("backRight", robot.backRight.getCurrentPosition());
+            telemetry.addData("frontLeft", robot.frontLeft.isBusy());
+            telemetry.addData("backLeft", robot.backLeft.isBusy());
+            telemetry.addData("frontRight", robot.frontRight.isBusy());
+            telemetry.addData("backRight", robot.backRight.isBusy());
+            telemetry.update();
+        }
+
+        //Thread.sleep(50000);
 
         telemetry.addData("move 10000", "complete");
 
@@ -126,20 +144,15 @@ public class autonomous extends LinearOpMode {
         stopMove();
     }*/
 
-    private void startMove(int direction, double speed, int distance) {
+    private void startMove(int direction, int speed, int distance) {
 
         robot.frontLeft.setTargetPosition(distance);
         robot.backLeft.setTargetPosition(distance);
         robot.frontRight.setTargetPosition(distance);
         robot.backRight.setTargetPosition(distance);
 
-        robot.frontLeft.setPower(speed);
-        robot.backLeft.setPower(speed);
-        robot.frontRight.setPower(speed);
-        robot.backRight.setPower(speed);
-
-        /*switch (direction) {
-            case (0): {             //Forwards is positive
+        switch (direction) {
+            case(0): {             //Forwards is positive
                 robot.frontLeft.setPower(speed);
                 robot.frontRight.setPower(speed);
                 robot.backLeft.setPower(speed);
@@ -163,9 +176,17 @@ public class autonomous extends LinearOpMode {
                 robot.backRight.setPower(speed);
                 robot.frontLeft.setPower(speed);
             }
-        }*/
-    }
 
+            /*while(robot.frontRight.getCurrentPosition() < robot.frontRight.getTargetPosition()){
+
+            }
+
+            robot.frontLeft.setPower(0);
+            robot.frontRight.setPower(0);
+            robot.backLeft.setPower(0);
+            robot.backRight.setPower(0);*/
+        }
+    }
     /*private void stopMove() {
         robot.frontLeft.setPower(0);
         robot.frontRight.setPower(0);
