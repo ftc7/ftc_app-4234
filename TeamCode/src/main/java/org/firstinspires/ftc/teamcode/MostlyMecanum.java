@@ -59,29 +59,29 @@ public class MostlyMecanum extends OpMode{
         robot.backLeft.setPower(Range.clip(si(BackLeft, 1.5), -1, 1));
         robot.backRight.setPower(Range.clip(si(BackRight, 1.5), -1, 1));
 
-        if(gamepad1.left_bumper){
-            robot.elevator.setPower(-50);
+        if(gamepad2.left_bumper){
+            robot.elevator.setPower(-100);
         }
         else{
             robot.elevator.setPower(0);
         }
-        if(gamepad1.right_bumper){
+        if(gamepad2.right_bumper){
             robot.flinger.setPower(20);
         }
         else{
             robot.flinger.setPower(0);
         }
 
-        if(gamepad1.dpad_up){
+        if(gamepad2.dpad_up){
             robot.mounter.setPosition(180);
         }
-        else if(gamepad1.dpad_down){
+        else if(gamepad2.dpad_down){
             robot.mounter.setPosition(0);
         }
-        else if(gamepad1.dpad_left){
+        else if(gamepad2.dpad_left){
             robot.buttonPress.setPosition(180);
         }
-        else if(gamepad1.dpad_right){
+        else if(gamepad2.dpad_right){
             robot.buttonPress.setPosition(150);
         }
 
