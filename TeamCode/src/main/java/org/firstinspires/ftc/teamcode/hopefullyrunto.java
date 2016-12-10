@@ -70,7 +70,7 @@ public class hopefullyrunto
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
         mounter.setPosition(0);
-        buttonPress.setPosition(0);
+        buttonPress.setPosition(0.5);
     }
 
     /***

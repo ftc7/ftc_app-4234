@@ -61,7 +61,7 @@ public class MostlyMecanum extends OpMode{
 
         if(gamepad2.left_bumper || gamepad1.left_bumper){
             robot.elevator.setPower(-100);
-        }elif(gamepad2.left_trigger || gamepad1.left_bumper){
+        }else if(gamepad2.back || gamepad1.back){
             robot.elevator.setPower(100);
         }
         else{
@@ -80,11 +80,13 @@ public class MostlyMecanum extends OpMode{
         else if(gamepad2.dpad_down || gamepad1.dpad_down){
             robot.mounter.setPosition(0);
         }
-        else if(gamepad2.dpad_left || gamepad1.dpad_left){
-            robot.buttonPress.setPosition(0);
-        }
-        else if(gamepad2.dpad_right || gamepad1.dpad_right){
+        if(gamepad2.x || gamepad1.x){
             robot.buttonPress.setPosition(0.2);
+        }
+        else if(gamepad2.b || gamepad1.b){
+            robot.buttonPress.setPosition(0.8);
+        }else{
+            robot.buttonPress.setPosition(0.5);
         }
 
         telemetry.addData("frontRight", FrontRight);

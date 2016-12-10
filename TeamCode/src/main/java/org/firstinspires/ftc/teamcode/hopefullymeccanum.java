@@ -72,7 +72,7 @@ public class hopefullymeccanum
         flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         mounter.setPosition(0);
-        buttonPress.setPosition(0);
+        buttonPress.setPosition(0.5);
     }
 
     /***
