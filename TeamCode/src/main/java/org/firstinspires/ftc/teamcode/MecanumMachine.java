@@ -62,15 +62,15 @@ public class MecanumMachine extends OpMode{
 
 
         if(gamepad2.left_bumper || gamepad1.left_bumper){
-            robot.elevator.setPower(-100);
+            robot.elevator.setPower(-1);
         }else if(gamepad2.back || gamepad1.back){
-            robot.elevator.setPower(100);
+            robot.elevator.setPower(1);
         }
         else{
             robot.elevator.setPower(0);
         }
         if(gamepad2.right_bumper || gamepad1.right_bumper){
-            robot.flinger.setPower(100);
+            robot.flinger.setPower(1);
         }
         else{
             robot.flinger.setPower(0);
