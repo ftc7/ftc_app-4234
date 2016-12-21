@@ -55,9 +55,9 @@ public class MecanumMachine extends OpMode{
             robot.backRight.setPower(Range.clip(si(rightJ, 1.5), -1, 1));
         }else{
             robot.frontLeft.setPower(Range.clip(si(spinSpeed, 1.5), -1, 1));
-            robot.frontRight.setPower(Range.clip(si(spinSpeed, 1.5), -1, 1));
+            robot.frontRight.setPower(Range.clip(si(-spinSpeed, 1.5), -1, 1));
             robot.backLeft.setPower(Range.clip(si(spinSpeed, 1.5), -1, 1));
-            robot.backRight.setPower(Range.clip(si(spinSpeed, 1.5), -1, 1));
+            robot.backRight.setPower(Range.clip(si(-spinSpeed, 1.5), -1, 1));
         }
 
 
@@ -71,8 +71,9 @@ public class MecanumMachine extends OpMode{
         }
         if(gamepad2.right_bumper || gamepad1.right_bumper){
             robot.flinger.setPower(1);
-        }
-        else{
+        }else if(gamepad2.start || gamepad1.start){
+            robot.flinger.setPower(-1);
+        }else{
             robot.flinger.setPower(0);
         }
 

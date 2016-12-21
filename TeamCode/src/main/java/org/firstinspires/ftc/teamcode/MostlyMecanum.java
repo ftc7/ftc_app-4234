@@ -69,8 +69,9 @@ public class MostlyMecanum extends OpMode{
         }
         if(gamepad2.right_bumper || gamepad1.right_bumper){
             robot.flinger.setPower(1);
-        }
-        else{
+        }else if(gamepad2.start || gamepad1.start){
+            robot.flinger.setPower(-1);
+        }else{
             robot.flinger.setPower(0);
         }
 
