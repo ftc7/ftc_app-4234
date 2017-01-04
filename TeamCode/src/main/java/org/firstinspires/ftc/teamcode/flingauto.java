@@ -9,7 +9,7 @@ public class flingauto extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();
 
-    public flingauto() {       //Called upon invocation of the class; defines variables and initializes Vuforia
+    public flingauto() {       //Called upon invocation of the class
         super();
     }
 
