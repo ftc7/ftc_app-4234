@@ -54,6 +54,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @TeleOp(name="PossiblyPushbot", group="Pushbot")
+@Disabled
 public class Tank_test extends OpMode{
 
     /* Declare OpMode members. */

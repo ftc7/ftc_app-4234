@@ -53,6 +53,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Autonomous(name = "CoolColors", group = "Sensor")
+@Disabled
 public class HTColor extends LinearOpMode {
 
   ColorSensor colorSensor;  // Hardware Device Object

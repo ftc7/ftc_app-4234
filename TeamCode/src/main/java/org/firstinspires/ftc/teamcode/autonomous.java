@@ -9,6 +9,7 @@ package org.firstinspires.ftc.teamcode;
 import android.view.View;*/
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -27,6 +28,7 @@ import static java.lang.Math.round;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
 @Autonomous(name="AlphaAutonomous", group="Autonomous")
+@Disabled
 public class autonomous extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();

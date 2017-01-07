@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="ThrowTraveless", group="Autonomous")
+@Autonomous(name="ThrowTraveless", group="Throw")
 public class flingautodrive extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();
