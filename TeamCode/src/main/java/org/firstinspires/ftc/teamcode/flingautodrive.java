@@ -20,7 +20,7 @@ public class flingautodrive extends LinearOpMode {
 
         waitForStart();
 
-        robot.flinger.setPower(100);
+        robot.flinger.setPower(1);
 
         Thread.sleep(3000);
 
@@ -32,16 +32,16 @@ public class flingautodrive extends LinearOpMode {
 
         Thread.sleep(0);
 
-        robot.flinger.setPower(100);
+        robot.flinger.setPower(1);
 
         Thread.sleep(5000);
 
         robot.flinger.setPower(0);
 
-        /*robot.frontLeft.setPower(-100);
-        robot.frontRight.setPower(-100);
-        robot.backLeft.setPower(-100);
-        robot.backRight.setPower(-100);
+        /*robot.frontLeft.setPower(1);
+        robot.frontRight.setPower(1);
+        robot.backLeft.setPower(1);
+        robot.backRight.setPower(1);
 
         Thread.sleep(2250);
 

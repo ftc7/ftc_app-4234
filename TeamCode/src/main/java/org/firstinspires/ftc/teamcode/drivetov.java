@@ -18,6 +18,11 @@ import static java.lang.Math.abs;
 import static java.lang.Math.round;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+
 @Autonomous(name="BrilliantBeacons", group="Autonomous")
 public class drivetov extends LinearOpMode {
 
@@ -49,15 +54,13 @@ public class drivetov extends LinearOpMode {
 
         waitForStart();
 
-        originalAuto(0.3, 0.3);
+        originalAuto(0.4, 0.4);
 
         Thread.sleep(500);
 
-        driveRawMotor(-1, -1, 1, 1, 1100);
-
-        Thread.sleep(500);
-
-        driveRawMotor(-1, -1, -1, -1, 750);
+        driveRawMotor(1, 1, 1, 1, 100);
+        driveRawMotor(1, 0, 1, 0, 500);
+        driveRawMotor(1, 1, 1, 1, 2000);
 
         //driveToVuforia(0.07);
     }
@@ -135,7 +138,7 @@ public class drivetov extends LinearOpMode {
         return;
     }
 
-    private void driveRawMotor(double frontL, double frontR, double backL, double backR, long time) throws InterruptedException {
+    private void driveRawMotor(double frontL, double frontR, double backL, double backR, long time) throws InterruptedException {       //1 is forwards
         robot.frontLeft.setPower(frontL);
         robot.frontRight.setPower(frontR);
         robot.backLeft.setPower(backL);
@@ -160,12 +163,18 @@ public class drivetov extends LinearOpMode {
         Thread.sleep(2000);
 
         robot.flinger.setPower(1);
+        Thread.sleep(2500);
+        robot.flinger.setPower(0);
+        Thread.sleep(1000);
 
-        Thread.sleep(5000);
+        robot.flinger.setPower(1);
+        Thread.sleep(2500);
+        robot.flinger.setPower(0);
+        Thread.sleep(1000);
 
         robot.flinger.setPower(0);
 
-        robot.frontLeft.setPower(-speedL);
+        /*robot.frontLeft.setPower(-speedL);
         robot.frontRight.setPower(-speedR);
         robot.backLeft.setPower(-speedL);
         robot.backRight.setPower(-speedR);
@@ -175,6 +184,51 @@ public class drivetov extends LinearOpMode {
         robot.frontLeft.setPower(0);
         robot.frontRight.setPower(0);
         robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);
+        robot.backRight.setPower(0);*/
+    }
+
+    private int getColor() throws InterruptedException {
+        int i = 0;
+
+        float hsvValues[] = {0F,0F,0F};
+        final float values[] = hsvValues;
+        //final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(R.id.RelativeLayout);
+        ColorSensor csensor = hardwareMap.colorSensor.get("colorSense");
+        csensor.enableLed(false);
+
+        while(i < 100) {
+            Color.RGBToHSV(csensor.red(), csensor.green(), csensor.blue(), hsvValues);
+            telemetry.addData("Clear", csensor.alpha());
+            telemetry.addData("Red  ", csensor.red());
+            telemetry.addData("Green", csensor.green());
+            telemetry.addData("Blue ", csensor.blue());
+            telemetry.addData("Hue  ", hsvValues[0]);
+            /*relativeLayout.post(new Runnable() {
+              public void run() {
+                relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+              }
+            });*/
+            telemetry.update();
+            idle();
+            i++;
+        }
+
+        return (int)(hsvValues[0]);
+    }
+
+    private boolean getButtonColor() throws InterruptedException {
+        if(getColor() > 300) {
+            return(true);           //red
+        } else {
+            return(false);          //blue
+        }
+    }
+
+    private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
+        if(onRedSide ^ getButtonColor()) {
+            robot.buttonPress.setPosition(0.2);
+        } else {
+            robot.buttonPress.setPosition(0.7);
+        }
     }
 }

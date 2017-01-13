@@ -38,10 +38,10 @@ public class flingauto extends LinearOpMode {
 
         robot.flinger.setPower(0);
 
-        robot.frontLeft.setPower(-1);
-        robot.frontRight.setPower(-1);
-        robot.backLeft.setPower(-1);
-        robot.backRight.setPower(-1);
+        robot.frontLeft.setPower(1);
+        robot.frontRight.setPower(1);
+        robot.backLeft.setPower(1);
+        robot.backRight.setPower(1);
 
         Thread.sleep(2250);
 

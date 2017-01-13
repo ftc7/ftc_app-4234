@@ -25,7 +25,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
 
-@Autonomous(name="ButtonBumper", group="Button")
+@Autonomous(name="RedRover", group="Button")
 public class pushbutton extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();
@@ -58,9 +58,14 @@ public class pushbutton extends LinearOpMode {
 
         Thread.sleep(5000);
 
-        driveToVuforia(0.07);
+        driveToVuforia(0.05);
 
-        pushButton();
+        telemetry.addData("getButtonColor()", getButtonColor());
+        telemetry.update();
+
+        pushButton(true);
+
+        Thread.sleep(60000);
     }
 
 
@@ -85,14 +90,14 @@ public class pushbutton extends LinearOpMode {
                         running = false;
                     }
                     else if (translation.get(0) > 0) {
-                        while(translation.get(0) > 10){
+                        while(translation.get(0) > 25){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
-                            robot.frontLeft.setPower(speed);
-                            robot.frontRight.setPower(speed);
-                            robot.backLeft.setPower(speed);
-                            robot.backRight.setPower(speed);
+                            robot.frontLeft.setPower(-speed);
+                            robot.frontRight.setPower(-speed);
+                            robot.backLeft.setPower(-speed);
+                            robot.backRight.setPower(-speed);
 
                             telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
                             telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
@@ -107,14 +112,14 @@ public class pushbutton extends LinearOpMode {
                         running = false;
                     }
                     else if (translation.get(0) < 0) {
-                        while(translation.get(0) < -10){
+                        while(translation.get(0) < -25){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
-                            robot.frontLeft.setPower(-speed);
-                            robot.frontRight.setPower(-speed);
-                            robot.backLeft.setPower(-speed);
-                            robot.backRight.setPower(-speed);
+                            robot.frontLeft.setPower(speed);
+                            robot.frontRight.setPower(speed);
+                            robot.backLeft.setPower(speed);
+                            robot.backRight.setPower(speed);
 
                             telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
                             telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
@@ -166,10 +171,10 @@ public class pushbutton extends LinearOpMode {
 
         robot.flinger.setPower(0);
 
-        robot.frontLeft.setPower(-speedL);
-        robot.frontRight.setPower(-speedR);
-        robot.backLeft.setPower(-speedL);
-        robot.backRight.setPower(-speedR);
+        robot.frontLeft.setPower(speedL);
+        robot.frontRight.setPower(speedR);
+        robot.backLeft.setPower(speedL);
+        robot.backRight.setPower(speedR);
 
         Thread.sleep(2000);
 
@@ -208,11 +213,19 @@ public class pushbutton extends LinearOpMode {
         return (int)(hsvValues[0]);
     }
 
-    private void pushButton() throws InterruptedException {
+    private boolean getButtonColor() throws InterruptedException {
         if(getColor() > 300) {
-            robot.buttonPress.setPosition(0.7);
+            return(true);           //red
         } else {
+            return(false);          //blue
+        }
+    }
+
+    private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
+        if(onRedSide ^ getButtonColor()) {
             robot.buttonPress.setPosition(0.2);
+        } else {
+            robot.buttonPress.setPosition(0.7);
         }
     }
 }

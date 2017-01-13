@@ -45,7 +45,7 @@ public class MostlyMecanum extends OpMode{
         double Ch1,Ch3,Ch4,FrontLeft,BackLeft,FrontRight,BackRight;
 
         //Mecanum drive
-        Ch1 = gamepad1.right_stick_x;
+        Ch1 = -gamepad1.right_stick_x;
         Ch3 = -gamepad1.left_stick_y;
         Ch4 = gamepad1.left_stick_x;
 
