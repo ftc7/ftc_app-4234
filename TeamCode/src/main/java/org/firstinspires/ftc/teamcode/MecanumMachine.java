@@ -85,14 +85,14 @@ public class MecanumMachine extends OpMode{
         else if(gamepad2.dpad_down || gamepad1.dpad_down){
             robot.mounter.setPosition(0);
         }
-        if(gamepad2.x || gamepad1.x){
+        /*if(gamepad2.x || gamepad1.x){
             robot.buttonPress.setPosition(0.2);
         }
         else if(gamepad2.b || gamepad1.b){
             robot.buttonPress.setPosition(0.8);
         }else{
             robot.buttonPress.setPosition(0.5);
-        }
+        }*/
 
         telemetry.addData("leftJ", leftJ);
         telemetry.addData("rightJ", rightJ);

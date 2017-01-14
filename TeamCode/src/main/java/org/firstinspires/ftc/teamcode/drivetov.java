@@ -61,8 +61,11 @@ public class drivetov extends LinearOpMode {
         driveRawMotor(1, 1, 1, 1, 100);
         driveRawMotor(1, 0, 1, 0, 500);
         driveRawMotor(1, 1, 1, 1, 2000);
+        driveRawMotor(0, 1, 0, 1, 500);
 
-        //driveToVuforia(0.07);
+        driveToVuforia(0.05);
+
+        pushButton(true);
     }
 
 
