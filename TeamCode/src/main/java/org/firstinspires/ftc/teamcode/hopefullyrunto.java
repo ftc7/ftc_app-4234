@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 /**
  * This is NOT an opmode.
@@ -21,7 +22,7 @@ public class hopefullyrunto
     public DcMotor elevator    = null;
     public DcMotor flinger     = null;
     public Servo   mounter     = null;
-    public Servo   buttonPress = null;
+    public CRServo   buttonPress = null;
     public ColorSensor colorSense = null;
 
     /* local OpMode members. */
@@ -46,8 +47,13 @@ public class hopefullyrunto
         elevator    = ahwMap.dcMotor.get("elevator");
         flinger     = ahwMap.dcMotor.get("flinger");
         mounter     = ahwMap.servo.get("mounter");
-        buttonPress = ahwMap.servo.get("buttonPress");
+        buttonPress = ahwMap.crservo.get("buttonPress");
         colorSense  = ahwMap.colorSensor.get("colorSense");
+
+        /*frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);*/
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeft.setPower(0);
@@ -59,18 +65,16 @@ public class hopefullyrunto
 
         // Set all motors to run using encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        flinger.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        buttonPress.setDirection(DcMotorSimple.Direction.FORWARD);
 
         mounter.setPosition(0);
-        buttonPress.setPosition(0.5);
+        //buttonPress.setPower(0.5);
     }
 
     /***

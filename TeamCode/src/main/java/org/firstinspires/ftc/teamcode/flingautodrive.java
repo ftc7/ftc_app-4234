@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name="ThrowTraveless", group="Throw")
 public class flingautodrive extends LinearOpMode {
 
-    private hopefullyrunto robot = new hopefullyrunto();
+    private hopefullymeccanum robot = new hopefullymeccanum();
 
     /*public flingautodrive() {       //Called upon invocation of the class; defines variables and initializes Vuforia
         super();

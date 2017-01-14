@@ -19,7 +19,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 @Autonomous(name="VersionVuforia", group="Autonomous")
 public class vuforitest extends LinearOpMode {
 
-    private hopefullyrunto robot = new hopefullyrunto();
+    private hopefullymeccanum robot = new hopefullymeccanum();
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables beacons;
 

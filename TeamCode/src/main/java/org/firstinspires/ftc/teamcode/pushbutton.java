@@ -28,7 +28,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 @Autonomous(name="RedRover", group="Button")
 public class pushbutton extends LinearOpMode {
 
-    private hopefullyrunto robot = new hopefullyrunto();
+    private hopefullymeccanum robot = new hopefullymeccanum();
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables beacons;
 
@@ -223,9 +223,9 @@ public class pushbutton extends LinearOpMode {
 
     private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
         if(onRedSide ^ getButtonColor()) {
-            robot.buttonPress.setPosition(0.2);
+            //robot.buttonPress.setPosition(0.2);
         } else {
-            robot.buttonPress.setPosition(0.7);
+            //robot.buttonPress.setPosition(0.7);
         }
     }
 }

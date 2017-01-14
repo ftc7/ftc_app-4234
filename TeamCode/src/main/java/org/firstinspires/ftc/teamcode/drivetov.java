@@ -26,7 +26,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 @Autonomous(name="BrilliantBeacons", group="Autonomous")
 public class drivetov extends LinearOpMode {
 
-    private hopefullyrunto robot = new hopefullyrunto();
+    private hopefullymeccanum robot = new hopefullymeccanum();
     private VuforiaLocalizer vuforia;
     private VuforiaTrackables beacons;
 
@@ -48,6 +48,8 @@ public class drivetov extends LinearOpMode {
     }
 
     public void runOpMode() throws InterruptedException {
+        //fl bl fr br
+
         robot.init(hardwareMap);
 
         robot.mounter.setPosition(0.7);
@@ -60,17 +62,22 @@ public class drivetov extends LinearOpMode {
 
         driveRawMotor(1, 1, 1, 1, 100);
         driveRawMotor(1, 0, 1, 0, 500);
-        driveRawMotor(1, 1, 1, 1, 2000);
+        driveRawMotor(1, 1, 1, 1, 1250);
         driveRawMotor(0, 1, 0, 1, 500);
+        driveRawMotor(1, 1, 1, 1, 800);
+        driveRawMotor(0, 1, 0, 1, 500);
+        //driveRawMotor(1, 1, 0.5, 0.5, 1000);
+        //driveRawMotor(1, 1, -1, -1, 3000);
 
-        driveToVuforia(0.05);
+        driveToVuforia(0.05, 0);
+        //driveCloserToVuforia(1);
 
         pushButton(true);
     }
 
 
 
-    private void driveToVuforia(double speed) {
+    private void driveToVuforia(double speed, int position) {
         boolean running = true;
 
         while (running){
@@ -86,33 +93,11 @@ public class drivetov extends LinearOpMode {
                     telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
                     telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
 
-                    if (abs(translation.get(0)) < 23){
+                    if (abs(translation.get(1) - position) < 1){
                         running = false;
                     }
-                    else if (translation.get(0) > 0) {
-                        while(translation.get(0) > 0){
-                            pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
-                            translation = pose.getTranslation();
-
-                            robot.frontLeft.setPower(speed);
-                            robot.frontRight.setPower(speed);
-                            robot.backLeft.setPower(speed);
-                            robot.backRight.setPower(speed);
-
-                            telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
-                            telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
-                            telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
-                        }
-
-                        robot.frontLeft.setPower(0);
-                        robot.frontRight.setPower(0);
-                        robot.backLeft.setPower(0);
-                        robot.backRight.setPower(0);
-
-                        running = false;
-                    }
-                    else if (translation.get(0) < 0) {
-                        while(translation.get(0) < 0){
+                    else if (translation.get(1) > position) {
+                        while(translation.get(1) > position){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
@@ -133,6 +118,69 @@ public class drivetov extends LinearOpMode {
 
                         running = false;
                     }
+                    else if (translation.get(1) < position) {
+                        while(translation.get(1) < position){
+                            pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
+                            translation = pose.getTranslation();
+
+                            robot.frontLeft.setPower(speed);
+                            robot.frontRight.setPower(speed);
+                            robot.backLeft.setPower(speed);
+                            robot.backRight.setPower(speed);
+
+                            telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
+                            telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
+                            telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
+
+                            telemetry.update();
+                        }
+
+                        robot.frontLeft.setPower(0);
+                        robot.frontRight.setPower(0);
+                        robot.backLeft.setPower(0);
+                        robot.backRight.setPower(0);
+
+                        running = false;
+                    }
+                }
+            }
+            telemetry.update();
+        }
+
+        return;
+    }
+
+    private void driveCloserToVuforia(double speed) {
+        boolean running = true;
+
+        while (running){
+            telemetry.addData("Camera", vuforia.getCameraCalibration());
+
+            for(VuforiaTrackable beac : beacons){
+                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
+
+                if(pose != null){
+                    VectorF translation = pose.getTranslation();
+
+                    telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
+                    telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
+                    telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
+
+                    robot.frontLeft.setPower(-speed);
+                    robot.frontRight.setPower(speed);
+                    robot.backLeft.setPower(speed);
+                    robot.backRight.setPower(-speed);
+
+                    while (abs(translation.get(2)) > 115){
+                        running = false;
+                    }
+
+                    robot.frontLeft.setPower(0);
+                    robot.frontRight.setPower(0);
+                    robot.backLeft.setPower(0);
+                    robot.backRight.setPower(0);
+
+                    running = false;
                 }
             }
             telemetry.update();
@@ -171,10 +219,7 @@ public class drivetov extends LinearOpMode {
         Thread.sleep(1000);
 
         robot.flinger.setPower(1);
-        Thread.sleep(2500);
-        robot.flinger.setPower(0);
-        Thread.sleep(1000);
-
+        Thread.sleep(3000);
         robot.flinger.setPower(0);
 
         /*robot.frontLeft.setPower(-speedL);
@@ -229,9 +274,11 @@ public class drivetov extends LinearOpMode {
 
     private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
         if(onRedSide ^ getButtonColor()) {
-            robot.buttonPress.setPosition(0.2);
+            //robot.buttonPress.setPosition(0.2);
+            telemetry.addData("our color is on the", "right");
         } else {
-            robot.buttonPress.setPosition(0.7);
+            //robot.buttonPress.setPosition(0.7);
+            telemetry.addData("our color is on the", "left");
         }
     }
 }

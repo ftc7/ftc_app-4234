@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name="ThrowTwo", group="Throw")
 public class flingauto extends LinearOpMode {
 
-    private hopefullyrunto robot = new hopefullyrunto();
+    private hopefullymeccanum robot = new hopefullymeccanum();
 
     public flingauto() {       //Called upon invocation of the class
         super();
@@ -43,7 +43,7 @@ public class flingauto extends LinearOpMode {
         robot.backLeft.setPower(1);
         robot.backRight.setPower(1);
 
-        Thread.sleep(2250);
+        Thread.sleep(1750);
 
         robot.frontLeft.setPower(0);
         robot.frontRight.setPower(0);
