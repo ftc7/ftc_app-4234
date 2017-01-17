@@ -22,10 +22,12 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 
 
 @Autonomous(name="RedRover", group="Button")
+//@Disabled
 public class pushbutton extends LinearOpMode {
 
     private hopefullymeccanum robot = new hopefullymeccanum();
@@ -58,17 +60,60 @@ public class pushbutton extends LinearOpMode {
 
         Thread.sleep(5000);
 
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
+
         driveToVuforia(0.05);
 
         telemetry.addData("getButtonColor()", getButtonColor());
         telemetry.update();
 
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         pushButton(true);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
 
         Thread.sleep(60000);
     }
 
 
+
+    private void driveEncoder(int posL, int posR, double powerL, double powerR, boolean left) throws InterruptedException {       //1 is forwards
+        robot.backRight.setTargetPosition(robot.backRight.getCurrentPosition() + posR);
+        robot.backLeft.setTargetPosition(robot.backLeft.getCurrentPosition() + posL);
+        robot.frontRight.setTargetPosition(robot.frontRight.getCurrentPosition() + posR);
+        robot.frontLeft.setTargetPosition(robot.frontLeft.getCurrentPosition() + posL);
+
+        robot.backRight.setPower(powerR);
+        robot.backLeft.setPower(powerL);
+        robot.frontRight.setPower(powerR);
+        robot.frontLeft.setPower(powerL);
+
+        if (left) {
+            while(robot.frontRight.isBusy()){}
+        } else {
+            while(robot.frontLeft.isBusy()){}
+        }
+    }
 
     private void driveToVuforia(double speed) {
         boolean running = true;
@@ -223,9 +268,17 @@ public class pushbutton extends LinearOpMode {
 
     private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
         if(onRedSide ^ getButtonColor()) {
-            //robot.buttonPress.setPosition(0.2);
+            telemetry.addData("our color is on the", "right");
+            driveEncoder(-256, -256, 0.3, 0.3, true);
+            robot.buttonPress.setPower(-1);
+            Thread.sleep(2000);
+            robot.buttonPress.setPower(0);
         } else {
-            //robot.buttonPress.setPosition(0.7);
+            telemetry.addData("our color is on the", "left");
+            driveEncoder(-512, -512, 0.3, 0.3, true);
+            robot.buttonPress.setPower(1);
+            Thread.sleep(2000);
+            robot.buttonPress.setPower(0);
         }
     }
 }

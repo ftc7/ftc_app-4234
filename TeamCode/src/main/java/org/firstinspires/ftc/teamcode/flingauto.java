@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name="ThrowTwo", group="Throw")
 public class flingauto extends LinearOpMode {
 
-    private hopefullymeccanum robot = new hopefullymeccanum();
+    private hopefullyrunto robot = new hopefullyrunto();
 
     public flingauto() {       //Called upon invocation of the class
         super();
@@ -38,19 +38,27 @@ public class flingauto extends LinearOpMode {
 
         robot.flinger.setPower(0);
 
-        robot.frontLeft.setPower(1);
-        robot.frontRight.setPower(1);
-        robot.backLeft.setPower(1);
-        robot.backRight.setPower(1);
-
-        Thread.sleep(1750);
-
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);
+        driveEncoder(3535, 3535, 0.5, 0.5, true);
 
         telemetry.addData("Autonomous", "complete.");
         telemetry.update();
+    }
+
+    private void driveEncoder(int posL, int posR, double powerL, double powerR, boolean left) throws InterruptedException {       //1 is forwards
+        robot.frontLeft.setTargetPosition(robot.frontLeft.getCurrentPosition() + posL);
+        robot.frontRight.setTargetPosition(robot.frontRight.getCurrentPosition() + posR);
+        robot.backLeft.setTargetPosition(robot.backLeft.getCurrentPosition() + posL);
+        robot.backRight.setTargetPosition(robot.backRight.getCurrentPosition() + posR);
+
+        robot.frontLeft.setPower(powerL);
+        robot.frontRight.setPower(powerR);
+        robot.backLeft.setPower(powerL);
+        robot.backRight.setPower(powerR);
+
+        if (left) {
+            while(robot.frontLeft.isBusy()){}
+        } else {
+            while(robot.frontRight.isBusy()){}
+        }
     }
 }

@@ -23,7 +23,7 @@ import android.graphics.Color;
 import android.view.View;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-@Autonomous(name="BrilliantBeacons", group="Autonomous")
+@Autonomous(name="BrilliantBeacons-red", group="Autonomous")
 public class drivetov extends LinearOpMode {
 
     private hopefullymeccanum robot = new hopefullymeccanum();
@@ -52,6 +52,18 @@ public class drivetov extends LinearOpMode {
 
         robot.init(hardwareMap);
 
+        double speeed = 0.4;
+
+        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         robot.mounter.setPosition(0.7);
 
         waitForStart();
@@ -60,22 +72,69 @@ public class drivetov extends LinearOpMode {
 
         Thread.sleep(500);
 
-        driveRawMotor(1, 1, 1, 1, 100);
-        driveRawMotor(1, 0, 1, 0, 500);
-        driveRawMotor(1, 1, 1, 1, 1250);
-        driveRawMotor(0, 1, 0, 1, 500);
-        driveRawMotor(1, 1, 1, 1, 800);
-        driveRawMotor(0, 1, 0, 1, 500);
-        //driveRawMotor(1, 1, 0.5, 0.5, 1000);
-        //driveRawMotor(1, 1, -1, -1, 3000);
+        driveEncoder(1500, 1500, speeed, speeed, true);
+        Thread.sleep(500);
+        driveEncoder(1100, 0, speeed, 0, false);
+        Thread.sleep(500);
+        driveEncoder(2150, 2150, speeed, speeed, true);
+        Thread.sleep(500);
+        driveEncoder(0, 1500, 0, speeed, false);
+        driveEncoder(300, 300, speeed, speeed, true);
+        driveEncoder(0, 2000, 0, speeed, false);
+        Thread.sleep(500);
+        driveEncoder(300, 300, speeed, speeed, true);
+        Thread.sleep(500);
 
-        driveToVuforia(0.05, 0);
-        //driveCloserToVuforia(1);
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
+
+        driveToVuforia(0.2, 0);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         pushButton(true);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
+        //Thread.sleep(10000);
     }
 
 
+
+    private void driveEncoder(int posL, int posR, double powerL, double powerR, boolean left) throws InterruptedException {       //1 is forwards
+        robot.backRight.setTargetPosition(robot.backRight.getCurrentPosition() + posR);
+        robot.backLeft.setTargetPosition(robot.backLeft.getCurrentPosition() + posL);
+        robot.frontRight.setTargetPosition(robot.frontRight.getCurrentPosition() + posR);
+        robot.frontLeft.setTargetPosition(robot.frontLeft.getCurrentPosition() + posL);
+
+        robot.backRight.setPower(powerR);
+        robot.backLeft.setPower(powerL);
+        robot.frontRight.setPower(powerR);
+        robot.frontLeft.setPower(powerL);
+
+        if (left) {
+            while(robot.frontRight.isBusy()){}
+        } else {
+            while(robot.frontLeft.isBusy()){}
+        }
+    }
 
     private void driveToVuforia(double speed, int position) {
         boolean running = true;
@@ -206,7 +265,7 @@ public class drivetov extends LinearOpMode {
     private void originalAuto(double speedL, double speedR) throws InterruptedException {
         robot.flinger.setPower(1);
 
-        Thread.sleep(3000);
+        Thread.sleep(2500);
 
         robot.mounter.setPosition(0);
         robot.flinger.setPower(0);
@@ -214,25 +273,8 @@ public class drivetov extends LinearOpMode {
         Thread.sleep(2000);
 
         robot.flinger.setPower(1);
-        Thread.sleep(2500);
-        robot.flinger.setPower(0);
-        Thread.sleep(1000);
-
-        robot.flinger.setPower(1);
         Thread.sleep(3000);
         robot.flinger.setPower(0);
-
-        /*robot.frontLeft.setPower(-speedL);
-        robot.frontRight.setPower(-speedR);
-        robot.backLeft.setPower(-speedL);
-        robot.backRight.setPower(-speedR);
-
-        Thread.sleep(2000);
-
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);*/
     }
 
     private int getColor() throws InterruptedException {
@@ -274,11 +316,17 @@ public class drivetov extends LinearOpMode {
 
     private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
         if(onRedSide ^ getButtonColor()) {
-            //robot.buttonPress.setPosition(0.2);
             telemetry.addData("our color is on the", "right");
+            driveEncoder(-256, -256, 0.4, 0.4, true);
+            robot.buttonPress.setPower(-1);
+            Thread.sleep(2000);
+            robot.buttonPress.setPower(0);
         } else {
-            //robot.buttonPress.setPosition(0.7);
             telemetry.addData("our color is on the", "left");
+            driveEncoder(-512, -512, 0.4, 0.4, true);
+            robot.buttonPress.setPower(1);
+            Thread.sleep(2000);
+            robot.buttonPress.setPower(0);
         }
     }
 }

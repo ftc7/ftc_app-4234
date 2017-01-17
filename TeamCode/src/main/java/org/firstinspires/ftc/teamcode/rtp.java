@@ -31,30 +31,38 @@ public class rtp extends LinearOpMode {
     }
 
     public void runOpMode() throws InterruptedException {
-        //fl bl fr br p
-
         robot.init(hardwareMap);
+
+        telemetry.addData("flm", robot.frontLeft.getMaxSpeed());
+        telemetry.update();
 
         waitForStart();
 
-        driveRawMotor(1000, 1000, 1000, 1000, 0.1);
+        driveEncoder(350, 350, 0.5, 0.5, true);
 
-        while(robot.frontLeft.isBusy())
-        {}
+        Thread.sleep(1000);
+
+        driveEncoder(1300, 0, 0.5, 0, false);
     }
 
 
 
-    private void driveRawMotor(int frontL, int frontR, int backL, int backR, double power) throws InterruptedException {       //1 is forwards
-        robot.frontLeft.setTargetPosition(robot.frontLeft.getCurrentPosition() + frontL);
-        robot.frontRight.setTargetPosition(robot.frontRight.getCurrentPosition() + frontR);
-        robot.backLeft.setTargetPosition(robot.backLeft.getCurrentPosition() + backL);
-        robot.backRight.setTargetPosition(robot.backRight.getCurrentPosition() + backR);
+    private void driveEncoder(int posL, int posR, double powerL, double powerR, boolean left) throws InterruptedException {       //1 is forwards
+        robot.backRight.setTargetPosition(robot.backRight.getCurrentPosition() + posR);
+        robot.backLeft.setTargetPosition(robot.backLeft.getCurrentPosition() + posL);
+        robot.frontRight.setTargetPosition(robot.frontRight.getCurrentPosition() + posR);
+        robot.frontLeft.setTargetPosition(robot.frontLeft.getCurrentPosition() + posL);
 
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(power);
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(power);
+        robot.backRight.setPower(powerR);
+        robot.backLeft.setPower(powerL);
+        robot.frontRight.setPower(powerR);
+        robot.frontLeft.setPower(powerL);
+
+        if (left) {
+            while(robot.frontRight.isBusy()){}
+        } else {
+            while(robot.frontLeft.isBusy()){}
+        }
     }
 
 }
