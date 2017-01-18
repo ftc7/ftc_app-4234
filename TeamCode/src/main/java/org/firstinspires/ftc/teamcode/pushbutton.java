@@ -70,7 +70,7 @@ public class pushbutton extends LinearOpMode {
         robot.backLeft.setPower(0);
         robot.backRight.setPower(0);
 
-        driveToVuforia(0.05);
+        driveToVuforia(0.05, 100);
 
         telemetry.addData("getButtonColor()", getButtonColor());
         telemetry.update();
@@ -80,7 +80,7 @@ public class pushbutton extends LinearOpMode {
         robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        pushButton(true);
+        pushButton(false);
 
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -115,7 +115,7 @@ public class pushbutton extends LinearOpMode {
         }
     }
 
-    private void driveToVuforia(double speed) {
+    private void driveToVuforia(double speed, int position) {
         boolean running = true;
 
         while (running){
@@ -131,11 +131,11 @@ public class pushbutton extends LinearOpMode {
                     telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
                     telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
 
-                    if (abs(translation.get(0)) < 23){
+                    if (abs(translation.get(1) - position) < 23){
                         running = false;
                     }
-                    else if (translation.get(0) > 0) {
-                        while(translation.get(0) > 25){
+                    else if (translation.get(1) > position) {
+                        while(translation.get(1) > position + 25){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
@@ -156,8 +156,8 @@ public class pushbutton extends LinearOpMode {
 
                         running = false;
                     }
-                    else if (translation.get(0) < 0) {
-                        while(translation.get(0) < -25){
+                    else if (translation.get(1) < position) {
+                        while(translation.get(1) < position - 25){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
@@ -269,13 +269,13 @@ public class pushbutton extends LinearOpMode {
     private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
         if(onRedSide ^ getButtonColor()) {
             telemetry.addData("our color is on the", "right");
-            driveEncoder(-256, -256, 0.3, 0.3, true);
-            robot.buttonPress.setPower(-1);
+            driveEncoder(-256, -256, 0.2, 0.2, true);
+            robot.buttonPress.setPower(1);
             Thread.sleep(2000);
             robot.buttonPress.setPower(0);
         } else {
             telemetry.addData("our color is on the", "left");
-            driveEncoder(-512, -512, 0.3, 0.3, true);
+            driveEncoder(-512, -512, 0.2, 0.2, true);
             robot.buttonPress.setPower(1);
             Thread.sleep(2000);
             robot.buttonPress.setPower(0);

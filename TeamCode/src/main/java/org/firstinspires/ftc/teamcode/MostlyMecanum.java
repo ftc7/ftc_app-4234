@@ -83,9 +83,11 @@ public class MostlyMecanum extends OpMode{
         }
         if(gamepad2.x || gamepad1.x){
             robot.buttonPress.setPower(1);
+            telemetry.addData("x", "true");
         }
         else if(gamepad2.b || gamepad1.b){
             robot.buttonPress.setPower(-1);
+            telemetry.addData("b", "true");
         }else{
             robot.buttonPress.setPower(0);
         }
