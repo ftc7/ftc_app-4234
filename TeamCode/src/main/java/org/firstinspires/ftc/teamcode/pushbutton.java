@@ -271,13 +271,13 @@ public class pushbutton extends LinearOpMode {
             telemetry.addData("our color is on the", "right");
             driveEncoder(-256, -256, 0.2, 0.2, true);
             robot.buttonPress.setPower(1);
-            Thread.sleep(2000);
+            Thread.sleep(2500);
             robot.buttonPress.setPower(0);
         } else {
             telemetry.addData("our color is on the", "left");
             driveEncoder(-512, -512, 0.2, 0.2, true);
             robot.buttonPress.setPower(1);
-            Thread.sleep(2000);
+            Thread.sleep(2500);
             robot.buttonPress.setPower(0);
         }
     }

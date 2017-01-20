@@ -76,11 +76,11 @@ public class drivetov extends LinearOpMode {
         Thread.sleep(500);
         driveEncoder(1100, 0, speeed, 0, false);
         Thread.sleep(500);
-        driveEncoder(2150, 2150, speeed, speeed, true);
+        driveEncoder(2100, 2100, speeed, speeed, true);
         Thread.sleep(500);
         driveEncoder(0, 1500, 0, speeed, false);
-        driveEncoder(300, 300, speeed, speeed, true);
-        driveEncoder(0, 2000, 0, speeed, false);
+        driveEncoder(400, 400, speeed, speeed, true);
+        driveEncoder(2500, 2500, 0, speeed, true);
         Thread.sleep(500);
         driveEncoder(300, 300, speeed, speeed, true);
         Thread.sleep(500);
@@ -95,7 +95,7 @@ public class drivetov extends LinearOpMode {
         robot.backLeft.setPower(0);
         robot.backRight.setPower(0);
 
-        driveToVuforia(0.2, 0);
+        driveToVuforia(0.05, 100);
 
         robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -152,11 +152,11 @@ public class drivetov extends LinearOpMode {
                     telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
                     telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
 
-                    if (abs(translation.get(1) - position) < 1){
+                    if (abs(translation.get(1) - position) < 23){
                         running = false;
                     }
                     else if (translation.get(1) > position) {
-                        while(translation.get(1) > position){
+                        while(translation.get(1) > position + 25){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
@@ -178,7 +178,7 @@ public class drivetov extends LinearOpMode {
                         running = false;
                     }
                     else if (translation.get(1) < position) {
-                        while(translation.get(1) < position){
+                        while(translation.get(1) < position - 25){
                             pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
                             translation = pose.getTranslation();
 
@@ -190,8 +190,6 @@ public class drivetov extends LinearOpMode {
                             telemetry.addData(beac.getName() + "-X:", round(translation.get(0)));       //Positive is when the target is higher than the phone
                             telemetry.addData(beac.getName() + "-Y:", round(translation.get(1)));       //Positive is when the target is righter than the phone
                             telemetry.addData(beac.getName() + "-Z:", round(translation.get(2)));       //NEGATIVE is when the target is behind than the phone (visible with the back camera)
-
-                            telemetry.update();
                         }
 
                         robot.frontLeft.setPower(0);
@@ -273,7 +271,7 @@ public class drivetov extends LinearOpMode {
         Thread.sleep(2000);
 
         robot.flinger.setPower(1);
-        Thread.sleep(3000);
+        Thread.sleep(3300);
         robot.flinger.setPower(0);
     }
 
@@ -317,15 +315,15 @@ public class drivetov extends LinearOpMode {
     private void pushButton(boolean onRedSide) throws InterruptedException {        //true is red
         if(onRedSide ^ getButtonColor()) {
             telemetry.addData("our color is on the", "right");
-            driveEncoder(-256, -256, 0.4, 0.4, true);
-            robot.buttonPress.setPower(-1);
-            Thread.sleep(2000);
+            driveEncoder(-256, -256, 0.2, 0.2, true);
+            robot.buttonPress.setPower(1);
+            Thread.sleep(2500);
             robot.buttonPress.setPower(0);
         } else {
             telemetry.addData("our color is on the", "left");
-            driveEncoder(-512, -512, 0.4, 0.4, true);
+            driveEncoder(-480, -480, 0.2, 0.2, true);
             robot.buttonPress.setPower(1);
-            Thread.sleep(2000);
+            Thread.sleep(2500);
             robot.buttonPress.setPower(0);
         }
     }
