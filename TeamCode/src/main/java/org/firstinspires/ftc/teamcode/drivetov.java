@@ -79,8 +79,10 @@ public class drivetov extends LinearOpMode {
         driveEncoder(2100, 2100, speeed, speeed, true);
         Thread.sleep(500);
         driveEncoder(0, 1500, 0, speeed, false);
+        Thread.sleep(500);
         driveEncoder(400, 400, speeed, speeed, true);
-        driveEncoder(2500, 2500, 0, speeed, true);
+        Thread.sleep(500);
+        driveEncoder(0, 2500, 0, speeed, true);
         Thread.sleep(500);
         driveEncoder(300, 300, speeed, speeed, true);
         Thread.sleep(500);
