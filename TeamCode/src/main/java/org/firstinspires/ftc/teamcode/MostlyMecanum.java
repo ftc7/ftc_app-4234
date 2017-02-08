@@ -92,6 +92,14 @@ public class MostlyMecanum extends OpMode{
             robot.buttonPress.setPower(0);
         }
 
+        if(gamepad2.y || gamepad1.y){
+            robot.liftdrop.setPosition(1);
+        }
+        if(gamepad2.a || gamepad1.a){
+            robot.lifter.setTargetPosition(1000);
+            robot.lifter.setPower(0.5);
+        }
+
         telemetry.addData("frontRight", FrontRight);
         telemetry.addData("frontLeft", FrontLeft);
         telemetry.addData("backRight", BackRight);

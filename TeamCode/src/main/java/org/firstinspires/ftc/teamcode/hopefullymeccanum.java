@@ -15,15 +15,19 @@ import com.qualcomm.robotcore.hardware.CRServo;
 public class hopefullymeccanum
 {
     /* Public OpMode members. */
-    public DcMotor frontLeft   = null;
-    public DcMotor frontRight  = null;
-    public DcMotor backLeft    = null;
-    public DcMotor backRight   = null;
-    public DcMotor elevator    = null;
-    public DcMotor flinger     = null;
-    public Servo   mounter     = null;
-    public CRServo   buttonPress = null;
+    public DcMotor frontLeft = null;
+    public DcMotor frontRight = null;
+    public DcMotor backLeft = null;
+    public DcMotor backRight = null;
+    public DcMotor elevator = null;
+    public DcMotor flinger = null;
+    public Servo mounter = null;
+    public CRServo buttonPress = null;
     public ColorSensor colorSense = null;
+    public DcMotor lift    public DcMotor lifter = null;
+    public Servo liftdrop = null;
+er = null;
+    public Servo liftdrop = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -49,6 +53,8 @@ public class hopefullymeccanum
         mounter     = ahwMap.servo.get("mounter");
         buttonPress = ahwMap.crservo.get("buttonPress");
         colorSense  = ahwMap.colorSensor.get("colorSense");
+        lifter      = ahwMap.dcMotor.get("lifter");
+        liftdrop    = ahwMap.servo.get("liftdrop");
 
         /*frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);*/
@@ -72,8 +78,10 @@ public class hopefullymeccanum
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         buttonPress.setDirection(DcMotorSimple.Direction.FORWARD);
+        lifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         mounter.setPosition(0);
+        liftdrop.setPosition(0);
         //buttonPress.setPower(0.5);
     }
 
