@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="ThrowTwo", group="Throw")
-public class flingauto extends LinearOpMode {
+@Autonomous(name="ThrowTwoC", group="ThrowC")
+public class flingautoc extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();
 
@@ -16,7 +16,7 @@ public class flingauto extends LinearOpMode {
 
         waitForStart();
 
-        driveEncoder(1000, 1000, 0.3, 0.3, true);
+        driveEncoder(100, 100, 0.3, 0.3, true);
 
         Thread.sleep(1000);
 
@@ -38,7 +38,7 @@ public class flingauto extends LinearOpMode {
 
         robot.flinger.setPower(0);
 
-        driveEncoder(2000, 2000, 0.3, 0.3, true);
+        driveEncoder(4000, 4000, 0.3, 0.3, true);
 
         telemetry.addData("Autonomous", "complete.");
         telemetry.update();

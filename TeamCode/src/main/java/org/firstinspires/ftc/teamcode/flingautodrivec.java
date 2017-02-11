@@ -4,19 +4,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="ThrowTwo", group="Throw")
-public class flingauto extends LinearOpMode {
+@Autonomous(name="ThrowTravelessC", group="ThrowC")
+public class flingautodrivec extends LinearOpMode {
 
-    private hopefullyrunto robot = new hopefullyrunto();
+    private hopefullymeccanum robot = new hopefullymeccanum();
 
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
-
         robot.mounter.setPosition(0);
 
         waitForStart();
 
-        driveEncoder(1000, 1000, 0.3, 0.3, true);
+        driveEncoder(100, 100, 0.3, 0.3, true);
 
         Thread.sleep(1000);
 
@@ -38,12 +37,9 @@ public class flingauto extends LinearOpMode {
 
         robot.flinger.setPower(0);
 
-        driveEncoder(2000, 2000, 0.3, 0.3, true);
-
         telemetry.addData("Autonomous", "complete.");
         telemetry.update();
     }
-
     private void driveEncoder(int posL, int posR, double powerL, double powerR, boolean left) throws InterruptedException {       //1 is forwards
         robot.frontLeft.setTargetPosition(robot.frontLeft.getCurrentPosition() + posL);
         robot.frontRight.setTargetPosition(robot.frontRight.getCurrentPosition() + posR);
@@ -61,4 +57,5 @@ public class flingauto extends LinearOpMode {
             while(robot.frontRight.isBusy()){}
         }
     }
+
 }

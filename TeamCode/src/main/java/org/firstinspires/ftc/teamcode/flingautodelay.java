@@ -9,38 +9,38 @@ public class flingautodelay extends LinearOpMode {
 
     private hopefullyrunto robot = new hopefullyrunto();
 
-    public flingautodelay() {       //Called upon invocation of the class
-        super();
-    }
-
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
 
-        robot.mounter.setPosition(0.7);
+        robot.mounter.setPosition(0);
 
         waitForStart();
 
+        Thread.sleep(20000);
+
+        driveEncoder(1000, 1000, 0.3, 0.3, true);
+
+        Thread.sleep(1000);
+
         robot.flinger.setPower(1);
 
-        Thread.sleep(3000);
+        Thread.sleep(1000);
 
         robot.flinger.setPower(0);
-
-        Thread.sleep(100);
-
-        robot.mounter.setPosition(0);
 
         Thread.sleep(0);
 
+        robot.mounter.setPosition(0.5);
+
+        Thread.sleep(2000);
+
         robot.flinger.setPower(1);
 
-        Thread.sleep(5000);
+        Thread.sleep(1000);
 
         robot.flinger.setPower(0);
 
-        Thread.sleep(15000);
-
-        driveEncoder(3535, 3535, 0.5, 0.5, true);
+        driveEncoder(2000, 2000, 0.3, 0.3, true);
 
         telemetry.addData("Autonomous", "complete.");
         telemetry.update();

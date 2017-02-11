@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
@@ -21,6 +22,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.round;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
+@Disabled
 @Autonomous(name="PointProven", group="runto")
 public class rtp extends LinearOpMode {
 

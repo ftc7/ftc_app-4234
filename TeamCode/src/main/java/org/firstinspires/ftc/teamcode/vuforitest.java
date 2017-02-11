@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,6 +17,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.round;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
 
+@Disabled
 @Autonomous(name="VersionVuforia", group="Autonomous")
 public class vuforitest extends LinearOpMode {
 
