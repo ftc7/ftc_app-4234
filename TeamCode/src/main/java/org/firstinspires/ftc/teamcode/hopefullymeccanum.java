@@ -22,11 +22,9 @@ public class hopefullymeccanum
     public DcMotor elevator = null;
     public DcMotor flinger = null;
     public Servo mounter = null;
-    public CRServo buttonPress = null;
-    public ColorSensor colorSense = null;
-    public DcMotor lift    public DcMotor lifter = null;
-    public Servo liftdrop = null;
-er = null;
+    public Servo liftShove = null;
+    //public ColorSensor colorSense = null;
+    public DcMotor lifter = null;
     public Servo liftdrop = null;
 
     /* local OpMode members. */
@@ -51,8 +49,8 @@ er = null;
         elevator    = ahwMap.dcMotor.get("elevator");
         flinger     = ahwMap.dcMotor.get("flinger");
         mounter     = ahwMap.servo.get("mounter");
-        buttonPress = ahwMap.crservo.get("buttonPress");
-        colorSense  = ahwMap.colorSensor.get("colorSense");
+        liftShove   = ahwMap.servo.get("liftShove");
+        //colorSense  = ahwMap.colorSensor.get("colorSense");
         lifter      = ahwMap.dcMotor.get("lifter");
         liftdrop    = ahwMap.servo.get("liftdrop");
 
@@ -77,12 +75,13 @@ er = null;
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        buttonPress.setDirection(DcMotorSimple.Direction.FORWARD);
+        lifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lifter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lifter.setTargetPosition(0);
 
         mounter.setPosition(0);
         liftdrop.setPosition(0);
-        //buttonPress.setPower(0.5);
+        liftShove.setPosition(0);
     }
 
     /***

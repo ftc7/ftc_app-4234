@@ -22,8 +22,6 @@ public class hopefullyrunto
     public DcMotor elevator    = null;
     public DcMotor flinger     = null;
     public Servo   mounter     = null;
-    public CRServo   buttonPress = null;
-    public ColorSensor colorSense = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -47,8 +45,6 @@ public class hopefullyrunto
         elevator    = ahwMap.dcMotor.get("elevator");
         flinger     = ahwMap.dcMotor.get("flinger");
         mounter     = ahwMap.servo.get("mounter");
-        buttonPress = ahwMap.crservo.get("buttonPress");
-        colorSense  = ahwMap.colorSensor.get("colorSense");
 
         /*frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);*/
@@ -76,7 +72,6 @@ public class hopefullyrunto
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flinger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        buttonPress.setDirection(DcMotorSimple.Direction.FORWARD);
 
         mounter.setPosition(0);
         //buttonPress.setPower(0.5);

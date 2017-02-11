@@ -10,6 +10,9 @@ public class MostlyMecanum extends OpMode{
     /* Declare OpMode members. */
     private hopefullymeccanum robot = new hopefullymeccanum(); // use the class created to define a Mecanobot's hardware
 
+    boolean liftforthedrop = false;
+    boolean dropthelift = false;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -76,28 +79,43 @@ public class MostlyMecanum extends OpMode{
         }
 
         if(gamepad2.dpad_up || gamepad1.dpad_up){
-            robot.mounter.setPosition(0.7);
+            robot.mounter.setPosition(0.5);
         }
         else if(gamepad2.dpad_down || gamepad1.dpad_down){
             robot.mounter.setPosition(0);
         }
-        if(gamepad2.x || gamepad1.x){
-            robot.buttonPress.setPower(1);
+
+        /*if(gamepad2.x || gamepad1.x){
+            robot.liftdrop.setPosition(1);
             telemetry.addData("x", "true");
         }
-        else if(gamepad2.b || gamepad1.b){
-            robot.buttonPress.setPower(-1);
+        if(gamepad2.b || gamepad1.b){
+            robot.liftShove.setPosition(1);
             telemetry.addData("b", "true");
-        }else{
-            robot.buttonPress.setPower(0);
+        }*/
+
+        dropthelift = liftforthedrop;
+
+        liftforthedrop = gamepad1.x || gamepad2.x;
+        if(liftforthedrop && !dropthelift){
+            robot.liftdrop.setPosition(0.8);
+        }
+        if(dropthelift && !liftforthedrop){
+            robot.liftShove.setPosition(0.5);
         }
 
-        if(gamepad2.y || gamepad1.y){
-            robot.liftdrop.setPosition(1);
-        }
+
         if(gamepad2.a || gamepad1.a){
-            robot.lifter.setTargetPosition(1000);
+            robot.lifter.setTargetPosition(0);
             robot.lifter.setPower(0.5);
+        }
+        if(gamepad2.y || gamepad1.y){
+            robot.lifter.setTargetPosition(12000);
+            robot.lifter.setPower(1);
+        }
+        if(gamepad2.b || gamepad1.b){
+            robot.lifter.setTargetPosition(10000);
+            robot.lifter.setPower(1);
         }
 
         telemetry.addData("frontRight", FrontRight);
